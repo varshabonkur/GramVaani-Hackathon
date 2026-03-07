@@ -1,0 +1,228 @@
+{
+  "info": {
+    "name": "GramVaani API",
+    "description": "Voice-first feedback platform for rural communities",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.gramvaani.example.com/v1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Submit Complaint",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transcript\": \"Paani ki tanki teen din se khaali hai\",\n  \"village\": \"Rampur\",\n  \"audioUrl\": \"https://s3.amazonaws.com/bucket/audio123.mp3\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/complaints",
+          "host": ["{{baseUrl}}"],
+          "path": ["complaints"]
+        },
+        "description": "Submit a new voice or text complaint"
+      },
+      "response": []
+    },
+    {
+      "name": "Get All Complaints",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/complaints",
+          "host": ["{{baseUrl}}"],
+          "path": ["complaints"]
+        },
+        "description": "Retrieve all complaints without filters"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Complaints by Village",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/complaints?village=Rampur",
+          "host": ["{{baseUrl}}"],
+          "path": ["complaints"],
+          "query": [
+            {
+              "key": "village",
+              "value": "Rampur"
+            }
+          ]
+        },
+        "description": "Get complaints filtered by village"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Complaints by Category",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/complaints?category=Water",
+          "host": ["{{baseUrl}}"],
+          "path": ["complaints"],
+          "query": [
+            {
+              "key": "category",
+              "value": "Water"
+            }
+          ]
+        },
+        "description": "Get complaints filtered by category"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Complaints by Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/complaints?status=Open",
+          "host": ["{{baseUrl}}"],
+          "path": ["complaints"],
+          "query": [
+            {
+              "key": "status",
+              "value": "Open"
+            }
+          ]
+        },
+        "description": "Get complaints filtered by status"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Complaints with Multiple Filters",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/complaints?village=Rampur&category=Water&status=Open&limit=50",
+          "host": ["{{baseUrl}}"],
+          "path": ["complaints"],
+          "query": [
+            {
+              "key": "village",
+              "value": "Rampur"
+            },
+            {
+              "key": "category",
+              "value": "Water"
+            },
+            {
+              "key": "status",
+              "value": "Open"
+            },
+            {
+              "key": "limit",
+              "value": "50"
+            }
+          ]
+        },
+        "description": "Get complaints with multiple filters applied"
+      },
+      "response": []
+    },
+    {
+      "name": "Get Statistics",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/stats",
+          "host": ["{{baseUrl}}"],
+          "path": ["stats"]
+        },
+        "description": "Get aggregated statistics and analytics"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Text Complaint",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transcript\": \"Sadak mein bada gaddha hai\",\n  \"village\": \"Shekhpur\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/complaints",
+          "host": ["{{baseUrl}}"],
+          "path": ["complaints"]
+        },
+        "description": "Submit a text-only complaint (no audio)"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Electricity Complaint",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transcript\": \"Biji nahi aa rahi hai teen ghante se\",\n  \"village\": \"Nagla\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/complaints",
+          "host": ["{{baseUrl}}"],
+          "path": ["complaints"]
+        },
+        "description": "Submit an electricity-related complaint"
+      },
+      "response": []
+    },
+    {
+      "name": "Submit Sanitation Complaint",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transcript\": \"Nala jam gaya hai aur ganda paani beh raha hai\",\n  \"village\": \"Rampur\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/complaints",
+          "host": ["{{baseUrl}}"],
+          "path": ["complaints"]
+        },
+        "description": "Submit a sanitation-related complaint"
+      },
+      "response": []
+    }
+  ]
+}

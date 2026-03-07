@@ -1,0 +1,13 @@
+{
+  "name": "gramvaani-scripts",
+  "version": "1.0.0",
+  "description": "Scripts for GramVaani backend",
+  "scripts": {
+    "populate": "node populate-test-data.js"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.1400.0"
+  },
+  "author": "",
+  "license": "MIT"
+}

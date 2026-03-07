@@ -1,0 +1,188 @@
+openapi: 3.0.0
+info:
+  title: GramVaani API
+  description: Voice-first feedback platform for rural communities
+  version: 1.0.0
+  contact:
+    name: GramVaani Team
+
+servers:
+  - url: https://api.gramvaani.example.com/v1
+    description: Production server
+  - url: http://localhost:3000/v1
+    description: Local development server
+
+paths:
+  /complaints:
+    get:
+      summary: Get all complaints
+      description: Retrieve complaints with optional filters
+      parameters:
+        - name: village
+          in: query
+          schema:
+            type: string
+          description: Filter by village name
+        - name: category
+          in: query
+          schema:
+            type: string
+            enum: [Water, Road, Electricity, Sanitation, Health, Other]
+          description: Filter by complaint category
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [Open, In Progress, Resolved]
+          description: Filter by status
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 100
+          description: Maximum number of results
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  complaints:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Complaint'
+                  count:
+                    type: integer
+
+    post:
+      summary: Submit a new complaint
+      description: Process and store a voice or text complaint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - transcript
+                - village
+              properties:
+                transcript:
+                  type: string
+                  description: Text of the complaint (transcribed from voice or direct text)
+                village:
+                  type: string
+                  description: Village name
+                audioUrl:
+                  type: string
+                  description: S3 URL of audio file (if voice complaint)
+      responses:
+        '200':
+          description: Complaint successfully processed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  complaint:
+                    $ref: '#/components/schemas/Complaint'
+        '400':
+          description: Bad request - missing required fields
+
+  /stats:
+    get:
+      summary: Get complaint statistics
+      description: Retrieve aggregated statistics and analytics
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  stats:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      open:
+                        type: integer
+                      inProgress:
+                        type: integer
+                      resolved:
+                        type: integer
+                      urgent:
+                        type: integer
+                      villages:
+                        type: integer
+                  categoryBreakdown:
+                    type: object
+                    additionalProperties:
+                      type: integer
+                  villageBreakdown:
+                    type: object
+                    additionalProperties:
+                      type: integer
+                  urgencyBreakdown:
+                    type: object
+                    properties:
+                      High:
+                        type: integer
+                      Medium:
+                        type: integer
+                      Low:
+                        type: integer
+                  trendData:
+                    type: object
+                    additionalProperties:
+                      type: integer
+
+components:
+  schemas:
+    Complaint:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique complaint ID
+        transcript:
+          type: string
+          description: Text of the complaint
+        category:
+          type: string
+          enum: [Water, Road, Electricity, Sanitation, Health, Other]
+          description: Auto-classified category
+        urgency:
+          type: string
+          enum: [High, Medium, Low]
+          description: Auto-detected urgency level
+        village:
+          type: string
+          description: Village name
+        timestamp:
+          type: string
+          format: date-time
+          description: When complaint was submitted
+        status:
+          type: string
+          enum: [Open, In Progress, Resolved]
+          description: Current status
+        sentiment:
+          type: number
+          format: float
+          minimum: -1
+          maximum: 1
+          description: Sentiment score
+        audioUrl:
+          type: string
+          nullable: true
+          description: S3 URL of audio file
+        source:
+          type: string
+          enum: [voice, text]
+          description: Input method
