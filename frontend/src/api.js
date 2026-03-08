@@ -1,26 +1,50 @@
-// frontend/src/api.js
-const API_BASE_URL = 'https://jj5nmbjioe.execute-api.us-east-1.amazonaws.com/prod';
-
+// frontend/src/api.js - MOCK DATA VERSION
 export const fetchComplaints = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/complaints`);
-    if (!response.ok) throw new Error('Failed to fetch');
-    const data = await response.json();
-    // API returns array directly, not {complaints: [...]}
-    return data;
-  } catch (error) {
-    console.error('API Error:', error);
-    return [];
-  }
+  console.log("Using mock complaints data");
+  return [
+    {
+      id: "C001",
+      transcript: "Water pipeline broken near school",
+      category: "Water",
+      urgency: "High",
+      village: "Rampur",
+      status: "Open",
+      timestamp: "2026-03-01"
+    },
+    {
+      id: "C002",
+      transcript: "Road full of potholes",
+      category: "Road",
+      urgency: "Medium",
+      village: "Lakshmipur",
+      status: "In Progress",
+      timestamp: "2026-03-03"
+    },
+    {
+      id: "C003",
+      transcript: "Street lights not working",
+      category: "Electricity",
+      urgency: "Low",
+      village: "Rampur",
+      status: "Resolved",
+      timestamp: "2026-03-05"
+    }
+  ];
 };
 
 export const fetchStats = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/stats`);
-    if (!response.ok) throw new Error('Failed to fetch');
-    return await response.json();
-  } catch (error) {
-    console.error('API Error:', error);
-    return null;
-  }
+  console.log("Using mock stats data");
+  return {
+    total: 12,
+    open: 5,
+    inProgress: 3,
+    resolved: 4,
+    byCategory: {
+      Water: 4,
+      Road: 3,
+      Electricity: 2,
+      Sanitation: 2,
+      Other: 1
+    }
+  };
 };
