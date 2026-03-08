@@ -6,7 +6,7 @@
     "populate": "node populate-test-data.js"
   },
   "dependencies": {
-    "aws-sdk": "^2.1400.0"
+    "aws-sdk": "^2.1693.0"
   },
   "author": "",
   "license": "MIT"
